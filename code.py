@@ -51,11 +51,26 @@ hangman = ['''
   / \  |
       ===''']
 
-word_list = ["abruptly","absurd","boxful","cycle","duplex","exodus",
-             "funny","gnostic","hyphen","injury","jumbo","knapsack",
-             "luxury","mystify","nightclub","oxygen","puzzling",
-             "quiz","rhythm","subway","transplant","unzip",
-             "vortex","wizard","yummy","zigzag"]
+word_list = ["soccer",
+    "basketball",
+    "tennis",
+    "cricket",
+    "golf",
+    "swimming",
+    "athletics",
+    "rugby",
+    "boxing",
+    "baseball",
+    "tennis",
+    "volleyball",
+    "badminton",
+    "hockey",
+    "football",
+    "fencing",
+    "gymnastics",
+    "skiing",
+    "snowboarding"]
+
 chosen_word = random.choice(word_list)
 
 os.system("clear")
