@@ -52,7 +52,11 @@ def check_guess():
             update_hangman(mistakes)
             if mistakes == 6:
                 end_game("lose")
-        alphabet_buttons[ord(letter) - ord('a')].config(bg="gray", state=tk.DISABLED)  # Change color and disable button
+        guess_entry.delete(0, tk.END)  # Clear the entry after each guess
+        disable_alphabet_button(letter)
+
+def disable_alphabet_button(letter):
+    alphabet_buttons[ord(letter) - ord('a')].config(state=tk.DISABLED)  # Disable the button
 
 def end_game(result):
     if result == "win":
@@ -62,8 +66,6 @@ def end_game(result):
     result_label.config(text=result_text)
     guess_entry.config(state="disabled")
     guess_button.config(state="disabled")
-    for button in alphabet_buttons:
-        button.config(state=tk.DISABLED)
 
 root = tk.Tk()
 root.title("HANGMAN GAME BY CODE OF DUTY")
@@ -106,14 +108,9 @@ alphabet_frame.pack(side="bottom", pady=20)  # Place at the bottom with some pad
 alphabet_buttons = []
 for i in range(26):
     letter = chr(ord('a') + i)
-    button = tk.Button(alphabet_frame, text=letter, font=("Arial", 12), bg="white", fg="black", state=tk.NORMAL,
-                       command=lambda l=letter: on_alphabet_click(l))
+    button = tk.Button(alphabet_frame, text=letter, font=("Arial", 12), bg="white", fg="black", command=lambda l=letter: disable_alphabet_button(l))
     button.grid(row=0, column=i, padx=2, pady=2)
     alphabet_buttons.append(button)
-
-def on_alphabet_click(letter):
-    alphabet_buttons[ord(letter) - ord('a')].config(bg="gray", state=tk.DISABLED)  # Change color and disable button
-    check_guess()
 
 # Initialise the game
 mistakes = 0
