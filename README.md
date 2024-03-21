@@ -4,9 +4,7 @@ Hangman Heroes is not your ordinary word-guessing game. Step into the world of s
 
 ## Team Members
 `KANAV [2310992111] - Team Lead`
-
 `NAMITA [2310992161]- Tester`
-
 `HARMAN [2310992089]-Developer`
 
 ## Project Description
