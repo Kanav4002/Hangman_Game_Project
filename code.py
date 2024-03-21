@@ -88,7 +88,7 @@ root.title("HANGMAN GAME BY CODE OF DUTY")
 root.configure(bg="black")  # Set background color to black
 
 # Set initial size of the window
-root.geometry("1210x600") 
+root.geometry("1210x600")
 
 # Add a label to display the 'team' ASCII art with neon-green color
 team_label = tk.Label(root, text=team, font=("Courier", 14), pady=10, bg="black", fg="#39FF14")  # Neon-green color
@@ -128,7 +128,7 @@ alphabet_frame.pack(side="bottom", pady=20)  # Place at the bottom with some pad
 alphabet_buttons = []
 for i in range(26):
     letter = chr(ord('a') + i)
-    button = tk.Button(alphabet_frame, text=letter, font=("Arial", 12), bg="white", fg="black", command=lambda l=letter: disable_alphabet_button(l))
+    button = tk.Button(alphabet_frame, text=letter, font=("Arial", 12), bg="white", fg="black", command=check_guess)
     button.grid(row=0, column=i, padx=2, pady=2)
     alphabet_buttons.append(button)
 
