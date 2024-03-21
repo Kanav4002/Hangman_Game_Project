@@ -2,7 +2,7 @@
 
 Hangman Heroes is not your ordinary word-guessing game. Step into the world of sports with this exciting twist on the classic Hangman game. Guess the names of famous sports (games) while enjoying a thrilling sports-themed adventure!
 
-## (Code of Duty) Members 
+## Team Members 
 KANAV [2310992111] - Team Lead
 
 NAMITA [2310992161]- Tester
