@@ -66,17 +66,37 @@ def end_game(result):
     result_label.config(text=result_text)
     guess_entry.config(state="disabled")
     guess_button.config(state="disabled")
+    restart_button.pack()  # Display the restart button
+
+def restart_game():
+    global word, word_with_blanks, mistakes
+    word = choose_word()
+    word_with_blanks = ['_'] * len(word)
+    word_label.config(text=' '.join(word_with_blanks))
+    mistakes = 0
+    guesses_left_label.config(text="Guesses Left: 6")
+    update_hangman(mistakes)
+    result_label.config(text="")
+    guess_entry.config(state="normal")
+    guess_button.config(state="normal")
+    for button in alphabet_buttons:
+        button.config(state="normal")
+    restart_button.pack_forget()  # Hide the restart button
 
 root = tk.Tk()
 root.title("HANGMAN GAME BY CODE OF DUTY")
 root.configure(bg="black")  # Set background color to black
 
 # Set initial size of the window
-root.geometry("1210x600")  # Set initial size to 800x600 pixels
+root.geometry("1210x600") 
 
 # Add a label to display the 'team' ASCII art with neon-green color
 team_label = tk.Label(root, text=team, font=("Courier", 14), pady=10, bg="black", fg="#39FF14")  # Neon-green color
 team_label.pack()
+
+# Add a label to display the theme
+theme_label = tk.Label(root, text="Theme: Sports", font=("Arial", 16), bg="black", fg="white")
+theme_label.pack()
 
 hangman_label = tk.Label(root, font=("Courier", 16), bg="black", fg="white")
 hangman_label.pack()
@@ -116,6 +136,11 @@ for i in range(26):
 mistakes = 0
 update_hangman(mistakes)
 guesses_left_label.config(text="Guesses Left: 6")  # Initial guesses left value
+
+# Create restart button
+restart_button = tk.Button(root, text="Restart", command=restart_game)
+restart_button.pack()
+restart_button.pack_forget()  # Initially hide the restart button
 
 # Start the event loop
 root.mainloop()
