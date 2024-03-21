@@ -27,7 +27,3 @@ Hangman Game is designed to be a fun and educational way to explore the world of
 For any inquiries or feedback, please contact us at `kanav2111.be23@chitkara.edu.in`.
 
 Let the games begin! 🏆⚽️🏀🏈🎾
-
-<span style="color:red">Red text</span>
-<span style="color:green">Green text</span>
-<span style="color:blue">Blue text</span>
