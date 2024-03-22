@@ -1,4 +1,4 @@
-# COD OF DUTY
+# CODE OF DUTY
 
 Hangman Heroes is not your ordinary word-guessing game. Step into the world of sports with this exciting twist on the classic Hangman game. Guess the names of famous sports (games) while enjoying a thrilling sports-themed adventure!
 
