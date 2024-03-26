@@ -26,17 +26,21 @@ hangman_art = [
     "   +---+\n   |   |\n   O   |\n  /|\\  |\n  / \\  |\n       |\n========="
 ]
 
+
+
 #define a function to choose a random word from the list
 def choose_word():
     return random.choice(words)
 
-#define a function to update the hangman ASCII art
+# Define a function to update the hangman ASCII art
 def update_hangman(mistake):
     hangman_label.config(text=hangman_art[mistake])
 
-#define a function to check if the letter is in the word
+# Define a function to check if the letter is in the word
 def check_guess():
+    global score
     letter = guess_entry.get().lower()  # Convert to lowercase
+
     if letter.isalpha() and len(letter) == 1:  # Ensure it's a single lowercase letter
         if letter in word:
             for i in range(len(word)):
@@ -44,6 +48,8 @@ def check_guess():
                     word_with_blanks[i] = letter
             word_label.config(text=' '.join(word_with_blanks))
             if '_' not in word_with_blanks:
+                score += 10  # Increment score by 10 for correct guess
+                score_label.config(text=f"Score: {score}")  # Update score label
                 end_game("win")
         else:
             global mistakes
@@ -55,9 +61,11 @@ def check_guess():
         guess_entry.delete(0, tk.END)  # Clear the entry after each guess
         disable_alphabet_button(letter)
 
+# Define a function to disable alphabet button after it's clicked
 def disable_alphabet_button(letter):
     alphabet_buttons[ord(letter) - ord('a')].config(state=tk.DISABLED)  # Disable the button
 
+# Define a function to end the game
 def end_game(result):
     if result == "win":
         result_text = "You win!"
@@ -68,13 +76,16 @@ def end_game(result):
     guess_button.config(state="disabled")
     restart_button.pack()  # Display the restart button
 
+# Define a function to restart the game
 def restart_game():
-    global word, word_with_blanks, mistakes
+    global word, word_with_blanks, mistakes, score
     word = choose_word()
     word_with_blanks = ['_'] * len(word)
     word_label.config(text=' '.join(word_with_blanks))
     mistakes = 0
-    guesses_left_label.config(text="Guesses Left: 6")
+    score = 0  # Reset score to 0
+    score_label.config(text=f"Score: {score}")  # Update score label
+    guesses_left_label.config(text="Guesses Left: 10")
     update_hangman(mistakes)
     result_label.config(text="")
     guess_entry.config(state="normal")
@@ -106,13 +117,18 @@ word_with_blanks = ['_'] * len(word)
 word_label = tk.Label(root, text=' '.join(word_with_blanks), font=("Arial", 24), bg="black", fg="white")
 word_label.pack()
 
-#create the guess entry and button
+# Create the guess entry and button
 guess_entry_frame = tk.Frame(root, bg="black")
 guess_entry_frame.pack()
 guess_entry = tk.Entry(guess_entry_frame, width=3, font=("Arial", 24), bg="black", fg="white")
 guess_entry.pack(side="left", padx=5, pady=5)
 guess_button = tk.Button(guess_entry_frame, text="Guess", command=check_guess, bg="black", fg="black")  # Change color to black
 guess_button.pack(side="left", padx=5, pady=5)
+
+# Create the score label
+score = 0
+score_label = tk.Label(root, text=f"Score: {score}", font=("Arial", 16), bg="black", fg="white")
+score_label.pack()
 
 #create the result label
 result_label = tk.Label(root, font=("Arial", 24), bg="black", fg="white")
