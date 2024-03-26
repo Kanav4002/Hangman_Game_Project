@@ -37,6 +37,7 @@ def update_hangman(mistake):
     hangman_label.config(text=hangman_art[mistake])
 
 # Define a function to check if the letter is in the word
+# Define a function to check if the letter is in the word
 def check_guess():
     global score
     letter = guess_entry.get().lower()  # Convert to lowercase
@@ -44,12 +45,12 @@ def check_guess():
     if letter.isalpha() and len(letter) == 1:  # Ensure it's a single lowercase letter
         if letter in word:
             for i in range(len(word)):
-                if word[i] == letter:
+                if word[i] == letter and word_with_blanks[i] == '_':
                     word_with_blanks[i] = letter
+                    score += 10 # Increment score by 10 for each correct alphabet
+                    score_label.config(text=f"Score: {score}")  # Update score label for each correct alphabet
             word_label.config(text=' '.join(word_with_blanks))
             if '_' not in word_with_blanks:
-                score += 10  # Increment score by 10 for correct guess
-                score_label.config(text=f"Score: {score}")  # Update score label
                 end_game("win")
         else:
             global mistakes
