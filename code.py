@@ -44,7 +44,7 @@ def check_guess():
             for i in range(len(word)):
                 if word[i] == letter:
                     word_with_blanks[i] = letter
-                    score += 10 # Increment score by 10 for each correct alphabet
+                    score += 5 # Increment score by 5 for each correct alphabet
                     score_label.config(text=f"Score: {score}")  # Update score label for each correct alphabet
             word_label.config(text=' '.join(word_with_blanks))
             if '_' not in word_with_blanks:
