@@ -1,10 +1,11 @@
 import tkinter as tk
 import random
+from tkinter import simpledialog
 
-#define a list of random words
+# Define a list of random words
 words = ["soccer","basketball","tennis","cricket","golf","swimming","athletics","rugby","boxing","baseball","tennis","volleyball","badminton","hockey","football","fencing","gymnastics","skiing","snowboarding"]
 
-#define the ASCII art for 'team'
+# Define the ASCII art for 'team'
 team = '''
       
 _________            .___               _____  ________          __          
@@ -15,7 +16,7 @@ _________            .___               _____  ________          __
         \/            \/    \/                         \/             \/     
 '''
 
-#define the ASCII art for hangman
+# Define the ASCII art for hangman
 hangman_art = [
     "   +---+\n   |   |\n       |\n       |\n       |\n       |\n=========",
     "   +---+\n   |   |\n   O   |\n       |\n       |\n       |\n=========",
@@ -26,9 +27,7 @@ hangman_art = [
     "   +---+\n   |   |\n   O   |\n  /|\\  |\n  / \\  |\n       |\n========="
 ]
 
-
-
-#define a function to choose a random word from the list
+# Define a function to choose a random word from the list
 def choose_word():
     return random.choice(words)
 
@@ -37,15 +36,13 @@ def update_hangman(mistake):
     hangman_label.config(text=hangman_art[mistake])
 
 # Define a function to check if the letter is in the word
-# Define a function to check if the letter is in the word
 def check_guess():
     global score
     letter = guess_entry.get().lower()  # Convert to lowercase
-
     if letter.isalpha() and len(letter) == 1:  # Ensure it's a single lowercase letter
         if letter in word:
             for i in range(len(word)):
-                if word[i] == letter and word_with_blanks[i] == '_':
+                if word[i] == letter:
                     word_with_blanks[i] = letter
                     score += 10 # Increment score by 10 for each correct alphabet
                     score_label.config(text=f"Score: {score}")  # Update score label for each correct alphabet
@@ -68,6 +65,7 @@ def disable_alphabet_button(letter):
 
 # Define a function to end the game
 def end_game(result):
+    global player_name
     if result == "win":
         result_text = "You win!"
     else:
@@ -76,6 +74,9 @@ def end_game(result):
     guess_entry.config(state="disabled")
     guess_button.config(state="disabled")
     restart_button.pack()  # Display the restart button
+    if player_name:
+        scoreboard[player_name] = score
+        display_scoreboard()
 
 # Define a function to restart the game
 def restart_game():
@@ -86,7 +87,7 @@ def restart_game():
     mistakes = 0
     score = 0  # Reset score to 0
     score_label.config(text=f"Score: {score}")  # Update score label
-    guesses_left_label.config(text="Guesses Left: 10")
+    guesses_left_label.config(text="Guesses Left: 6")
     update_hangman(mistakes)
     result_label.config(text="")
     guess_entry.config(state="normal")
@@ -94,6 +95,21 @@ def restart_game():
     for button in alphabet_buttons:
         button.config(state="normal")
     restart_button.pack_forget()  # Hide the restart button
+    get_player_name()
+
+def get_player_name():
+    global player_name
+    player_name = simpledialog.askstring("Player Name", "Enter your name:")
+
+def display_scoreboard():
+    if scoreboard:
+        sorted_scores = sorted(scoreboard.items(), key=lambda x: x[1], reverse=True)
+        scoreboard_text = "Scoreboard:\n"
+        for idx, (name, score) in enumerate(sorted_scores, start=1):
+            scoreboard_text += f"{idx}. {name}: {score}\n"
+        tk.messagebox.showinfo("Scoreboard", scoreboard_text)
+    else:
+        tk.messagebox.showinfo("Scoreboard", "No scores recorded yet.")
 
 root = tk.Tk()
 root.title("HANGMAN GAME BY CODE OF DUTY")
@@ -107,7 +123,7 @@ team_label = tk.Label(root, text=team, font=("Courier", 14), pady=10, bg="black"
 team_label.pack()
 
 # Add a label to display the theme
-theme_label = tk.Label(root, text="Theme: Sports", font=("Arial", 16), bg="black", fg="white")
+theme_label = tk.Label(root, text="Theme: Sports", font=("Arial", 16), bg="black", fg="#39FF14")
 theme_label.pack()
 
 hangman_label = tk.Label(root, font=("Courier", 16), bg="black", fg="white")
@@ -131,12 +147,12 @@ score = 0
 score_label = tk.Label(root, text=f"Score: {score}", font=("Arial", 16), bg="black", fg="white")
 score_label.pack()
 
-#create the result label
+# Create the result label
 result_label = tk.Label(root, font=("Arial", 24), bg="black", fg="white")
 result_label.pack()
 
 # Add label to display the number of guesses left
-guesses_left_label = tk.Label(root, font=("Arial", 16), bg="black", fg="white")
+guesses_left_label = tk.Label(root, font=("Arial", 16), bg="black", fg="#39FF14")
 guesses_left_label.pack()
 
 # Create alphabet buttons
@@ -149,7 +165,7 @@ for i in range(26):
     button.grid(row=0, column=i, padx=2, pady=2)
     alphabet_buttons.append(button)
 
-# Initialise the game
+# Initialize the game
 mistakes = 0
 update_hangman(mistakes)
 guesses_left_label.config(text="Guesses Left: 6")  # Initial guesses left value
@@ -158,6 +174,13 @@ guesses_left_label.config(text="Guesses Left: 6")  # Initial guesses left value
 restart_button = tk.Button(root, text="Restart", command=restart_game)
 restart_button.pack()
 restart_button.pack_forget()  # Initially hide the restart button
+
+# Initialize player name and scoreboard
+player_name = None
+scoreboard = {}
+
+# Get player name
+get_player_name()
 
 # Start the event loop
 root.mainloop()
