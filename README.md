@@ -7,7 +7,7 @@ KANAV [2310992111] - Team Lead
 
 HARMAN KAUR [2310992089] - Developer+Tester
 
-NAMITA GUPTA [2310992161] - Developer+Tester
+NAMITA [2310992161] - Developer+Tester
 
 ## Project Description
 
