@@ -1,9 +1,13 @@
 import tkinter as tk
 import random
-from tkinter import simpledialog
+from tkinter import simpledialog, messagebox
 
-# Define a list of random words
-words = ["soccer","basketball","tennis","cricket","golf","swimming","athletics","rugby","boxing","baseball","tennis","volleyball","badminton","hockey","football","fencing","gymnastics","skiing","snowboarding"]
+# Define themes and their respective word lists
+themes = {
+    "Sports": ["soccer", "basketball", "tennis", "cricket", "golf", "swimming", "athletics", "rugby", "boxing", "baseball", "tennis", "volleyball", "badminton", "hockey", "football"],
+    "Fruits": ["apple", "banana", "orange", "grape", "strawberry", "kiwi", "watermelon", "pineapple", "mango", "peach"],
+    "Animals": ["dog", "cat", "elephant", "tiger", "lion", "giraffe", "zebra", "monkey", "penguin", "koala", "kangaroo"]
+}
 
 # Define the ASCII art for 'team'
 team = '''
@@ -27,9 +31,9 @@ hangman_art = [
     "   +---+\n   |   |\n   O   |\n  /|\\  |\n  / \\  |\n       |\n========="
 ]
 
-# Define a function to choose a random word from the list
-def choose_word():
-    return random.choice(words)
+# Define a function to choose a random word from the selected theme
+def choose_word(theme):
+    return random.choice(themes[theme])
 
 # Define a function to update the hangman ASCII art
 def update_hangman(mistake):
@@ -81,7 +85,7 @@ def end_game(result):
 # Define a function to restart the game
 def restart_game():
     global word, word_with_blanks, mistakes, score
-    word = choose_word()
+    word = choose_word(selected_theme.get())
     word_with_blanks = ['_'] * len(word)
     word_label.config(text=' '.join(word_with_blanks))
     mistakes = 0
@@ -100,6 +104,7 @@ def restart_game():
 def get_player_name():
     global player_name
     player_name = simpledialog.askstring("Player Name", "Enter your name:")
+    select_theme()
 
 def display_scoreboard():
     if scoreboard:
@@ -107,10 +112,10 @@ def display_scoreboard():
         scoreboard_text = "Scoreboard:\n"
         for idx, (name, score) in enumerate(sorted_scores, start=1):
             scoreboard_text += f"{idx}. {name}: {score}\n"
-        tk.messagebox.showinfo("Scoreboard", scoreboard_text)
+        messagebox.showinfo("Scoreboard", scoreboard_text)
     else:
-        tk.messagebox.showinfo("Scoreboard", "No scores recorded yet.")
-
+        messagebox.showinfo("Scoreboard", "No scores recorded yet.")
+        
 root = tk.Tk()
 root.title("HANGMAN GAME BY CODE OF DUTY")
 root.configure(bg="black")  # Set background color to black
@@ -122,16 +127,13 @@ root.geometry("1210x600")
 team_label = tk.Label(root, text=team, font=("Courier", 14), pady=10, bg="black", fg="#39FF14")  # Neon-green color
 team_label.pack()
 
-# Add a label to display the theme
-theme_label = tk.Label(root, text="Theme: Sports", font=("Arial", 16), bg="black", fg="#39FF14")
-theme_label.pack()
 
 hangman_label = tk.Label(root, font=("Courier", 16), bg="black", fg="white")
 hangman_label.pack()
 
-word = choose_word()
-word_with_blanks = ['_'] * len(word)
-word_label = tk.Label(root, text=' '.join(word_with_blanks), font=("Arial", 24), bg="black", fg="white")
+word_with_blanks = []
+
+word_label = tk.Label(root, text='', font=("Arial", 24), bg="black", fg="white")
 word_label.pack()
 
 # Create the guess entry and button
@@ -179,6 +181,37 @@ restart_button.pack_forget()  # Initially hide the restart button
 player_name = None
 scoreboard = {}
 
+# Create a dropdown menu to select theme
+selected_theme = tk.StringVar(root)
+selected_theme.set("Sports")  # Default theme
+theme_menu = tk.OptionMenu(root, selected_theme, *themes.keys(), command=lambda theme: select_theme(theme))
+theme_menu.pack()
+
+theme_menu = tk.OptionMenu(root, selected_theme, *themes.keys())
+theme_menu.pack()
+
+
+def select_theme():
+    global word, mistakes
+    word = choose_word(selected_theme.get())
+    word_with_blanks[:] = ['_'] * len(word)
+    word_label.config(text=' '.join(word_with_blanks))
+    mistakes = 0
+    guesses_left_label.config(text="Guesses Left: 6")
+    update_hangman(mistakes)
+    result_label.config(text="")
+    guess_entry.config(state="normal")
+    guess_button.config(state="normal")
+    for button in alphabet_buttons:
+        button.config(state="normal")
+
+# Call select_theme() initially to set up the game
+select_theme()
+def on_theme_change(*args):
+    select_theme()
+
+# Attach the on_theme_change function to the StringVar
+selected_theme.trace_add("write", on_theme_change)
 # Get player name
 get_player_name()
 
