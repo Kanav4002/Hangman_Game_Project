@@ -41,6 +41,6 @@ Interactive Gameplay: Engage in a dynamic gaming experience with interactive vis
 Hangman Game is designed to be a fun and educational way to explore the world of sports while honing your word-guessing skills. Whether you're a die-hard sports fan or just looking for a new challenge, the game has something for everyone. Get ready to embark on an epic sports adventure and become a true hero of the Hangman realm!
 
 ## Feedback
-For any inquiries or feedback, please contact us at `kanav2111.be23@chitkara.edu.in`, 'harman2089.be23@chitkara.edu.in' or 'namita2161@chitkara.edu.in'.
+For any inquiries or feedback, please contact us at `kanav2111.be23@chitkara.edu.in`, `harman2089.be23@chitkara.edu.in` or `namita2161@chitkara.edu.in`.
 
 Let the games begin! 🏆⚽️🏀🏈🎾
