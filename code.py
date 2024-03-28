@@ -146,7 +146,7 @@ guess_button.pack(side="left", padx=5, pady=5)
 
 # Create the score label
 score = 0
-score_label = tk.Label(root, text=f"Score: {score}", font=("Arial", 16), bg="black", fg="white")
+score_label = tk.Label(root, text=f"Score: {score}", font=("Arial", 16), bg="black", fg="#39FF14")
 score_label.pack()
 
 # Create the result label
@@ -184,12 +184,14 @@ scoreboard = {}
 # Create a dropdown menu to select theme
 selected_theme = tk.StringVar(root)
 selected_theme.set("Sports")  # Default theme
-theme_menu = tk.OptionMenu(root, selected_theme, *themes.keys(), command=lambda theme: select_theme(theme))
+def handle_theme_selection(theme):
+    select_theme()
+theme_menu = tk.OptionMenu(root, selected_theme, *themes.keys(), command=handle_theme_selection)
 theme_menu.pack()
 
-theme_menu = tk.OptionMenu(root, selected_theme, *themes.keys())
-theme_menu.pack()
-
+# Remove the duplicate packing of theme_menu
+ttheme_menu = tk.OptionMenu(root, selected_theme, *themes.keys())
+ttheme_menu.pack_forget()
 
 def select_theme():
     global word, mistakes
