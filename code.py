@@ -1,3 +1,4 @@
+
 import tkinter as tk
 import random
 from tkinter import simpledialog, messagebox
@@ -21,12 +22,12 @@ themes = {
         "usa": "The United States of America.",
         "japan": "An island nation in East Asia.",
         "brazil": "The largest country in South America.",
-        "india": "The second most populous country in the world.",
+        "india": "The most populous country in the world.",
         "australia": "A country and continent surrounded by the Indian and Pacific oceans.",
         "canada": "The second-largest country in the world by land area.",
         "germany": "A country in Central Europe known for its engineering and beer.",
         "france": "A country in Western Europe known for its cuisine and culture.",
-        "china": "The most populous country in the world.",
+        "china": "The second most populous country in the world.",
         "russia": "The largest country by land area."
     },
     "Fruits": {
@@ -227,7 +228,7 @@ scoreboard = {}
 
 
 # Create a label to display the hint
-hint_label = tk.Label(root, font=("Arial", 15), bg="#232427", fg="#39FF14" )
+hint_label = tk.Label(root, font=("Arial", 15), bg="#232427", fg="#39FF14", wraplength=300, justify="left")
 hint_label.pack()
 
 
